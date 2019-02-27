@@ -31,8 +31,8 @@ const listChats = async (ctx) => {
 };
 
 const listChatsByRoom = async (ctx) => {
-  let options = {where: {room: room}};
   let room = ctx.params.room;
+  let options = {where: {room: room}};
 
   let result = await database.Chat.findAll(options);
   let chats = await Promise.all(result.map(chat => chat.toJSON()));
@@ -61,7 +61,7 @@ const createChat = async (ctx) => {
 const publicRouter = new Router({ prefix: '/api' });
 
 publicRouter.get('/chats', listChats);
-publicRouter.get('/chats/:room', listChats);
+publicRouter.get('/chats/:room', listChatsByRoom);
 publicRouter.post('/chats/:room', createChat);
 
 app.use(publicRouter.routes());
